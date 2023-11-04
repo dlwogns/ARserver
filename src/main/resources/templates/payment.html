@@ -12,7 +12,7 @@
         function requestPay() {
             IMP.request_pay(
                 {
-                    pg: "uplus.iamporttest_3", //Test는 TC0ONETIME
+                    pg: "kakaopay.TC0ONETIME", //Test는 TC0ONETIME
                     pay_method: "card",
                     merchant_uid: "57008833-33004",
                     name: "테스트 상점",
@@ -41,6 +41,9 @@
     <title>Sample Payment</title>
 </head>
 <body>
+<script>
+    requestPay();
+</script>
 <button onclick="requestPay()">결제하기</button>
 </body>
 </html>

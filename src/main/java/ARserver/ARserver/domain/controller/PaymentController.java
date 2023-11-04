@@ -6,7 +6,9 @@ import com.siot.IamportRestClient.response.IamportResponse;
 import com.siot.IamportRestClient.response.Payment;
 import jakarta.annotation.PostConstruct;
 import java.io.IOException;
-import lombok.Value;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,10 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class PaymentController {
 
-    //@Value("${iamport.key}")
-    private String restApiKey = "1881230373525180";
-    //@Value("${iamport.secret}")
-    private String restApiSecret = "G6jLgj325HftORzE1pquYMJDjZnXf81GqfWZh1vRcF7cppAjpfrzNqDfsqWg9pwLO1mgSJz3N5vGGH7L";
+    @Value("${key}")
+    private String restApiKey;
+    @Value("${secret}")
+    private String restApiSecret;
 
     private IamportClient iamportClient;
 
