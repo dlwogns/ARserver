@@ -58,7 +58,16 @@ public class UserController {
         session.setMaxInactiveInterval(1800);
 
         return ResponseEntity.ok(userId);
+    }
 
+    @GetMapping("/logout")
+    public ResponseEntity logout(HttpServletRequest request){
+        HttpSession session = request.getSession(false);
+        if(session != null){
+            session.invalidate();
+            return ResponseEntity.ok("로그아웃 성공");
+        }
+        return ResponseEntity.status(401).body("로그아웃 실패");
 
     }
 }
