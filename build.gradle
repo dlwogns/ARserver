@@ -26,6 +26,20 @@ dependencies {
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	//iamport
+	implementation 'com.github.iamport:iamport-rest-client-java:0.2.21'
+	allprojects {
+		repositories {
+			maven { url 'https://jitpack.io' }
+		}
+	}
+	//webflux
+	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
+	//thymeleaf
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
 }
 
 tasks.named('test') {
