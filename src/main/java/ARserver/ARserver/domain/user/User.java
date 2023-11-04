@@ -1,11 +1,17 @@
 package ARserver.ARserver.domain.user;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class User {
-    private String id;
+    private Long id;
+    private String email;
     private String password;
 
-    public User(String id, String password){
-        this.id = id;
+    public User(String email, String password){
+        this.email = email;
         this.password = password;
     }
 }
