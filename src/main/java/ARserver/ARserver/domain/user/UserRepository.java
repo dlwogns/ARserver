@@ -4,27 +4,24 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class UserRepository {
-    private static UserRepository instance;
-    private static final Map<String, User> store = new ConcurrentHashMap<>();
-    private UserRepository(){}
-
+    private static final Map<Long, User> store = new ConcurrentHashMap<>();
+    private static final Map<String, User> storebyemail = new ConcurrentHashMap<>();
     private Long sequence = 1L;
 
-    public static UserRepository getInstance(){
-        if(instance == null){
-            instance = new UserRepository();
-        }
-        return instance;
-    }
-
     public User save(User user){
+//        user.setId(sequence++);
+//        store.put(user.getEmail(), user);
         user.setId(sequence++);
-        store.put(user.getEmail(), user);
+        store.put(user.getId(), user);
+        storebyemail.put(user.getEmail(), user);
         return user;
     }
 
     public User findByEmail(String email){
-        return store.get(email);
+        return storebyemail.get(email);
+    }
+    public User findById(Long id){
+        return store.get(id);
     }
 
 
