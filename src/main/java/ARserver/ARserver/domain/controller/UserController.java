@@ -27,7 +27,7 @@ public class UserController {
             @SessionAttribute(name="userId", required = false) Long userId
     ){
         if(userId == null){
-            return ResponseEntity.status(401).body("아이디를 찾을 수 없습니다");
+            return ResponseEntity.status(202).body("로그인을 하지 않았습니다");
         }
         return ResponseEntity.ok(userService.getUserById(userId));
     }
@@ -39,6 +39,8 @@ public class UserController {
             @RequestParam String password
     ){
         User user = new User(name, email, password);
+        if(userService.checkLoginEmailDuplicated(user))
+            return ResponseEntity.status(202).body("이미 가입한 이메일이 있습니다");
         userService.join(user);
         return ResponseEntity.ok(user);
 
@@ -50,15 +52,15 @@ public class UserController {
             @RequestParam String password,
             HttpServletRequest request
     ){
-        Long userId = userService.login(email, password);
-        if(userId == null)
-            return ResponseEntity.status(404).body("이메일을 찾을 수 없습니다");
+        User user = userService.login(email, password);
+        if(user == null)
+            return ResponseEntity.status(202).body("등록되지 않은 이메일이거나 비밀번호가 틀립니다");
         request.getSession().invalidate();
         HttpSession session = request.getSession(true);
-        session.setAttribute("userId", userId);
+        session.setAttribute("userId", user.getId());
         session.setMaxInactiveInterval(1800);
 
-        return ResponseEntity.ok(userId);
+        return ResponseEntity.ok(user);
     }
 
     @GetMapping("/logout")
@@ -68,7 +70,7 @@ public class UserController {
             session.invalidate();
             return ResponseEntity.ok("로그아웃 성공");
         }
-        return ResponseEntity.status(401).body("로그아웃 실패");
+        return ResponseEntity.status(202).body("로그아웃 실패");
 
     }
 }

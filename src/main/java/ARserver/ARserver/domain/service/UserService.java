@@ -9,17 +9,22 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserService {
     UserRepository userRepository = new UserRepository();
-    public Long login(String email, String password){
+    public User login(String email, String password){
         User user = userRepository.findByEmail(email);
         if(user == null)
             return null;
         if(user.getPassword().equals(password))
-            return user.getId();
+            return user;
         return null;
     }
     public Long join(User user){
         userRepository.save(user);
         return user.getId();
+    }
+    public boolean checkLoginEmailDuplicated(User user){
+        if(userRepository.findByEmail(user.getEmail()) != null)
+            return true;
+        return false;
     }
 
     public User getUserById(Long id){
