@@ -9,8 +9,6 @@ public class UserRepository {
     private Long sequence = 1L;
 
     public User save(User user){
-//        user.setId(sequence++);
-//        store.put(user.getEmail(), user);
         user.setId(sequence++);
         store.put(user.getId(), user);
         storebyemail.put(user.getEmail(), user);
