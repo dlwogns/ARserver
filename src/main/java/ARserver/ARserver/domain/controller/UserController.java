@@ -34,10 +34,11 @@ public class UserController {
 
     @PostMapping("/join")
     public ResponseEntity join(
+            @RequestParam String name,
             @RequestParam String email,
             @RequestParam String password
     ){
-        User user = new User(email, password);
+        User user = new User(name, email, password);
         userService.join(user);
         return ResponseEntity.ok(user);
 
